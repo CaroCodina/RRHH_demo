@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Empleados</h2>
+
+<div style="margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+    <form method="GET" action="{{ url_for('empleados') }}">
+        <input type="text" name="buscar" placeholder="Buscar..." value="{{ buscar or '' }}">
+        <button class="btn" type="submit">Buscar</button>
+    </form>
+    <div>
+        <a href="{{ url_for('nuevo_empleado') }}" class="btn">+ Nuevo Empleado</a>
+        <a href="{{ url_for('exportar_empleados') }}" class="btn" style="background-color: #28a745;">Exportar Excel</a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Cargo</th>
+            <th>Fecha Ingreso</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emp in empleados.items %}
+        <tr>
+            <td>{{ emp.nombre }}</td>
+            <td>{{ emp.apellido }}</td>
+            <td>{{ emp.cargo }}</td>
+            <td>{{ emp.fecha_ingreso.strftime('%Y-%m-%d') }}</td>
+            <td>{{ emp.estado }}</td>
+            <td>
+                <a href="{{ url_for('editar_empleado', id=emp.id) }}">Editar</a>
+                <a href="{{ url_for('eliminar_empleado', id=emp.id) }}" onclick="return confirm('¿Estás seguro de eliminar a {{ emp.nombre }} {{ emp.apellido }}?');">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div style="margin-top: 20px;">
+    {% if empleados.has_prev %}
+    <a href="{{ url_for('empleados', page=empleados.prev_num, buscar=buscar) }}" class="btn">« Anterior</a>
+    {% endif %}
+    {% if empleados.has_next %}
+    <a href="{{ url_for('empleados', page=empleados.next_num, buscar=buscar) }}" class="btn">Siguiente »</a>
+    {% endif %}
+</div>
+
+{% endblock %}

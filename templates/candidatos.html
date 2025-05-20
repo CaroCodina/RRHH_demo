@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Candidatos</h2>
+
+<div style="margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+    <form method="GET" action="{{ url_for('candidatos') }}">
+        <input type="text" name="buscar" placeholder="Buscar..." value="{{ buscar or '' }}">
+        <button class="btn" type="submit">Buscar</button>
+    </form>
+    <a href="{{ url_for('nuevo_candidato') }}" class="btn">+ Nuevo Candidato</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in candidatos.items %}
+        <tr>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.puesto }}</td>
+            <td>{{ c.estado }}</td>
+            <td>
+                <a href="{{ url_for('editar_candidato', id=c.id) }}">Editar</a> |
+                <form action="{{ url_for('eliminar_candidato', id=c.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este candidato?');">
+                    <button type="submit" style="background:none; border:none; color:red; cursor:pointer;">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Paginación -->
+<div style="margin-top: 20px;">
+    {% if candidatos.has_prev %}
+        <a href="{{ url_for('candidatos', page=candidatos.prev_num, buscar=buscar) }}">&laquo; Anterior</a>
+    {% endif %}
+    Página {{ candidatos.page }} de {{ candidatos.pages }}
+    {% if candidatos.has_next %}
+        <a href="{{ url_for('candidatos', page=candidatos.next_num, buscar=buscar) }}">Siguiente &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

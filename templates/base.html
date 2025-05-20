@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema RRHH</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="margin: 0; display: flex; height: 100vh;">
+
+    <!-- Sidebar -->
+    <div style="width: 220px; background-color: #007bff; color: white; padding: 20px 10px;">
+        <div class="logo" style="text-align: center;">
+            <img src="{{ url_for('static', filename='img/logo_atento.png') }}" alt="Logo Atento" style="width: 150px;">
+        </div>
+        <ul style="list-style: none; padding: 0; margin-top: 30px;">
+            <li style="margin: 15px 0;"><a href="{{ url_for('index') }}" style="color: white;"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+            <li style="margin: 15px 0;"><a href="{{ url_for('empleados') }}" style="color: white;"><i class="fas fa-users"></i> Empleados</a></li>
+            <li style="margin: 15px 0;"><a href="{{ url_for('candidatos') }}" style="color: white;"><i class="fas fa-user-tie"></i> Candidatos</a></li>
+            <li style="margin: 15px 0;"><a href="{{ url_for('logout') }}" style="color: white;"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div style="flex-grow: 1; padding: 30px;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-success">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

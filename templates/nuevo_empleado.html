@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Nuevo Empleado</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" required>
+    </div>
+    <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" required>
+    </div>
+    <div class="form-group">
+        <label for="cargo">Cargo:</label>
+        <input type="text" name="cargo" required>
+    </div>
+    <div class="form-group">
+        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+        <input type="date" name="fecha_ingreso" required>
+    </div>
+    <div class="form-group">
+        <label for="estado">Estado:</label>
+        <select name="estado" required>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+    </div>
+    <button type="submit" class="btn">Guardar</button>
+    <a href="{{ url_for('empleados') }}" class="btn" style="background-color: #6c757d;">Cancelar</a>
+</form>
+{% endblock %}

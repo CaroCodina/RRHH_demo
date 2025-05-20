@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Editar Empleado</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" value="{{ empleado.nombre }}" required>
+    </div>
+    <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" value="{{ empleado.apellido }}" required>
+    </div>
+    <div class="form-group">
+        <label for="cargo">Cargo:</label>
+        <input type="text" name="cargo" value="{{ empleado.cargo }}" required>
+    </div>
+    <div class="form-group">
+        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+        <input type="date" name="fecha_ingreso" value="{{ empleado.fecha_ingreso.strftime('%Y-%m-%d') }}" required>
+    </div>
+    <div class="form-group">
+        <label for="estado">Estado:</label>
+        <select name="estado" required>
+            <option value="Activo" {% if empleado.estado == 'Activo' %}selected{% endif %}>Activo</option>
+            <option value="Inactivo" {% if empleado.estado == 'Inactivo' %}selected{% endif %}>Inactivo</option>
+        </select>
+    </div>
+    <button type="submit" class="btn">Actualizar</button>
+    <a href="{{ url_for('empleados') }}" class="btn" style="background-color: #6c757d;">Cancelar</a>
+</form>
+{% endblock %}
